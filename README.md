@@ -37,3 +37,22 @@ It's python, so feel free to edit `caption_anything.py`. You could change sample
 ## Generate captions via the network
 
 There are already plenty of apps for that. This app took [this one](https://github.com/sanchit-gandhi/whisper-jax/blob/main/app/app.py) and adapted it to work offline and locally, in real-time, on a single machine.
+
+## Issues
+
+**GPU memory usage.** According to a post by [sanchit-gandhi](https://github.com/sanchit-gandhi/whisper-jax/issues/7#issuecomment-1531124418), JAX using 90% of GPU RAM is probably unnecessary, but intended to prevent fragmentation. You can disable that with an environment variable, e.g. `XLA_PYTHON_CLIENT_PREALLOCATE=false ./whisper_dictation.py`.
+
+You can also reduce memory footprint by using a smaller language model for whisper-jax.
+
+You can monitor JAX memory usage with [jax-smi](https://github.com/ayaka14732/jax-smi), `nvidia-smi`, or by installing the bloated, GreenWithEnvy (gwe) for Nvidia cards which does the same thing with a graphical interface.
+
+This is a fairly new project. There are bound to be more issues. Share them on the [issues section on GitHub](https://github.com/themanyone/caption_anything/issuess). Or fork the project, create a new branch with proposed changes. And submit a pull request.
+
+### Thanks for trying out Whisper Dictation.
+
+Browse Themanyone
+- GitHub https://github.com/themanyone
+- YouTube https://www.youtube.com/themanyone
+- Mastodon https://mastodon.social/@themanyone
+- Linkedin https://www.linkedin.com/in/henry-kroll-iii-93860426/
+- [TheNerdShow.com](http://thenerdshow.com/)
