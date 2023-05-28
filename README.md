@@ -1,6 +1,6 @@
 # caption_anything
 
-<img src="wyh.png">
+<img src="wyh.png" width="300" style="float:right">
 
 Caption or translate whatever is playing through the speakers, or from the microphone. Also record audio and/or create captions as you record calls.
 
