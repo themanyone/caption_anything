@@ -177,7 +177,8 @@ class MainWindow(Gtk.ApplicationWindow):
                 start_time = time.time()
                 # Record the stream
                 audio_data = recorder.record(numframes=duration)
-                self.recording += audio_data
+                self.recording = audio_data if not len(self.recording) \
+                    else self.recording + audio_data
                 
                 audio_data = audio_data[:, 0]  # Extract the first channel
                 
