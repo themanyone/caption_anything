@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Install [whisper-jax and requirements]([WhisperX and requirements](https://github.com/m-bain/whisperX).
+Install [whisper-jax and requirements]([WhisperX and requirements](https://github.com/sanchit-gandhi/whisper-jax).
 ).
 
 Enable gobject introspection for Python 3.10.
