@@ -4,13 +4,13 @@
 
 Caption, translate, or optionally record, whatever audio/video is playing through the speakers, or from the microphone. Privacy-focused, offline, real-time captions using your video card and [whisper-jax](https://github.com/sanchit-gandhi/whisper-jax/).
 
-It is especially handy for people with hearing or memory loss, or people who speak another language, to caption and record calls. It might also be useful to generate audio training data for use with AI. This isn't designed as a dictation app. [Try my other app for dictation.](https://github.com/themanyone/whisper_dictation).
+It is especially handy for people with hearing or memory loss, or people who speak another language, to caption and record calls. I made it specifically for watching videos when a video creator has a strong accent. AI captions work even when I can't understand what they are saying. Captions can be saved in a variety of formats. The saved data could even be corrected and used to train another AI.
 
 ## Usage
 
-If you want to record and/or caption **both** sides of the conversation, echo the mic to the output channel first. You could do that via gstreamer. 
+This is not designed as a dictation app. [Try my other app for dictation.](https://github.com/themanyone/whisper_dictation).
 
-**WARNING.** This will cause unwanted feedback if your volume is up too high!
+If you want to record and/or caption **both** sides of the conversation, echo the mic to the output channel first. You could do that via gstreamer. **WARNING.** This will cause unwanted feedback if your volume is up too high!
 
 ```
 gst-launch-1.0 -v autoaudiosrc ! autoaudiosink
