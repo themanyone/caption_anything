@@ -1,6 +1,6 @@
 # caption_anything
 
-<img src="wyh.png" width="300" align="right">
+<img src="img/ss.png" width="300" align="right">
 
 Caption, translate, or optionally record, whatever audio/video is playing through the speakers, or from the microphone. Privacy-focused, offline, real-time captions using your video card and [whisper-jax](https://github.com/sanchit-gandhi/whisper-jax/).
 
