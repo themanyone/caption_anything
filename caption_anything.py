@@ -67,12 +67,14 @@ class MainWindow(Gtk.ApplicationWindow):
         hbox.append(combo)
         # Connect signal to get the selected text
         combo.connect("changed", self.on_combobox_changed)
+        
         # Create a GtkEntry box
         txt = "Preparing language model. Please wait..."
         entry = Gtk.Entry()
         entry.set_text(txt)
         vbox.append(entry)
         self.captions_box = entry
+        
         # Adding your custom CSS stylesheet
         css_provider = Gtk.CssProvider()
         css_provider.load_from_path('style.css')
@@ -185,8 +187,7 @@ class MainWindow(Gtk.ApplicationWindow):
                 start_time = time.time() - begin
                 # Record the stream
                 audio_data = recorder.record(numframes=duration)
-                self.recording = audio_data if not len(self.recording) \
-                    else self.recording + audio_data
+                self.recording.append(audio_data)
                 
                 audio_data = audio_data[:, 0]  # Extract the first channel
                 
@@ -210,7 +211,6 @@ class MainWindow(Gtk.ApplicationWindow):
 
     # Show audio captions on interface
     def show_caption(self, text_chunk):
-        # print(text_chunk, end='')
         self.captions_box.set_css_classes(['trans'])
         self.captions_box.set_text(text_chunk)
         return False
@@ -222,7 +222,7 @@ class MainWindow(Gtk.ApplicationWindow):
             try:
                 self.rec_thread.join()
             except Exception as e:
-                print(e)
+                print("Exception:", e)
         if len(self.recording):
             if os.path.isfile(filename):
                 # File exists. Overwrite? Python gi Gtk(4.0) dialog.
@@ -242,8 +242,9 @@ class MainWindow(Gtk.ApplicationWindow):
         if button == Gtk.ResponseType.YES:
             filename = self.file_entry.get_text()
             # Save the recording to a file
+            rec = np.concatenate(self.recording)
             try:
-                sf.write(filename, self.recording, samplerate=sample_rate, format='wav')
+                sf.write(filename, rec, samplerate=sample_rate, format='wav')
                 self.recording = []
                 print("File saved as", filename)
                 # Also save captions
@@ -255,7 +256,7 @@ class MainWindow(Gtk.ApplicationWindow):
                         exts[ext] = filename + ext
                         
                 # write text tile
-                f = open(f"{filename}.txt", 'w')
+                f = open(exts[".txt"], 'w')
                 f.write('\n'.join([x[2] for x in self.text]))
                 f.close()
                 
