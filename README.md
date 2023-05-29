@@ -2,6 +2,10 @@
 
 <img src="wyh.png" width="300" align="right">
 
+# Status: Not working today
+
+I changed something <
+
 Caption, translate, or optionally record, whatever audio/video is playing through the speakers, or from the microphone. Privacy-focused, offline, real-time captions using your video card and [whisper-jax](https://github.com/sanchit-gandhi/whisper-jax/).
 
 It is especially handy for people with hearing or memory loss, or people who speak another language, to caption and record calls. It might also be useful to generate audio training data for use with AI. This isn't designed as a dictation app. [Try my other app for dictation.](https://github.com/themanyone/whisper_dictation).

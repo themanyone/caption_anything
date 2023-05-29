@@ -68,11 +68,18 @@ class MainWindow(Gtk.ApplicationWindow):
         # Connect signal to get the selected text
         combo.connect("changed", self.on_combobox_changed)
         # Create a GtkEntry box
-        txt = "<span foreground=\"fuchsia\" size=\"xx-large\">Preparing language model. Please wait...</span>"
-        label = Gtk.Label()
-        label.set_markup(txt)
-        vbox.append(label)
-        self.captions_box = label
+        txt = "Preparing language model. Please wait..."
+        entry = Gtk.Entry()
+        entry.set_text(txt)
+        vbox.append(entry)
+        self.captions_box = entry
+        # Adding your custom CSS stylesheet
+        css_provider = Gtk.CssProvider()
+        css_provider.load_from_path('style.css')
+        Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), 
+            css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+        self.captions_box.set_css_classes(['warning'])
+
         
         # Add a header
         self.header = Gtk.HeaderBar()
@@ -83,7 +90,7 @@ class MainWindow(Gtk.ApplicationWindow):
         
         # Set file name
         self.file_entry = Gtk.Entry()
-        self.file_entry.set_text(time.ctime().replace(" ", "_"))
+        self.file_entry.set_text(time.ctime().replace(" ", "_")+".wav")
         self.file_entry.set_width_chars(10)
         self.header.pack_start(self.file_entry)
         
@@ -172,9 +179,10 @@ class MainWindow(Gtk.ApplicationWindow):
         self.text = []
         duration = channels * sample_rate * chunk_time
         ttime = 0
+        begin = time.time()
         with subdevice.recorder(samplerate=sample_rate, channels=channels) as recorder:
             while not self.stop_event.is_set():
-                start_time = time.time()
+                start_time = time.time() - begin
                 # Record the stream
                 audio_data = recorder.record(numframes=duration)
                 self.recording = audio_data if not len(self.recording) \
@@ -187,7 +195,7 @@ class MainWindow(Gtk.ApplicationWindow):
                 # Generate captions
                 text_chunk, dummy = tqdm_generate(input_samples, task=task,
                     return_timestamps=return_timestamps)
-                end_time = time.time()
+                end_time = time.time() - begin
                 
                 # Show the captions
                 if text_chunk != " you":
@@ -203,7 +211,8 @@ class MainWindow(Gtk.ApplicationWindow):
     # Show audio captions on interface
     def show_caption(self, text_chunk):
         # print(text_chunk, end='')
-        self.captions_box.set_markup(f"<span font-weight=\"bold\" size=\"xx-large\">{text_chunk}</span>")
+        self.captions_box.set_css_classes(['trans'])
+        self.captions_box.set_text(text_chunk)
         return False
         
     def stop_audio(self, widget, **kwargs):
@@ -297,7 +306,8 @@ class MainWindow(Gtk.ApplicationWindow):
     
     def get_pipeline(self):
         pipeline = init_pipeline()
-        self.captions_box.set_markup("<span foreground=\"lightblue\" size=\"xx-large\">Language model ready.</span>")
+        self.captions_box.set_css_classes(['info'])
+        self.captions_box.set_text("Language model ready.")
         self.allow_transcribing = True # Allow transcribing
         print("Ready")
         
