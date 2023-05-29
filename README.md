@@ -4,7 +4,7 @@
 
 Caption, translate, or optionally record, whatever audio/video is playing through the speakers, or from the microphone. Privacy-focused, offline, real-time captions using your video card and [whisper-jax](https://github.com/sanchit-gandhi/whisper-jax/).
 
-It is especially handy for people with hearing or memory loss, or people who speak another language, to caption and record calls. The maker of this app uses it to make sense of informational videos made with a strong accent. Captions can be saved in a variety of formats. The saved data could even be corrected and used to train another AI.
+The original purpose of this application was for watching informational videos made with a strong accent when there are no captions available. It is especially handy for people with hearing or memory loss, or people who speak another language, to caption and record calls. The caption display is delayed a few seconds, so if you miss something, you can glance at the output. Captions can be saved in a variety of formats. The saved data could even be corrected and used to train another AI.
 
 ## Notices
 
