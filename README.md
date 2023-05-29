@@ -24,9 +24,7 @@ Set up your inputs and outputs using your favorite mixer program. Then, fire up 
 
 ## Requirements
 
-Install [whisper-jax and requirements]([WhisperX and requirements](https://github.com/sanchit-gandhi/whisper-jax). Get whisper-jax working first, by trying out some of their examples.
-
-Install more requirements. Not tested or guaranteed to work yet. You might need to edit the requirements for your setup.
+Set up your virtual environment and install the requirements. The following is not tested or guaranteed to work yet. You might need to edit the requirements for your setup.
 
 ```
 # activate conda or venv
@@ -34,6 +32,8 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip3 -r requirements.txt
 ```
+
+Install [whisper-jax and requirements]([WhisperX and requirements](https://github.com/sanchit-gandhi/whisper-jax) and get whisper-jax working before making captions here. Try out some of their examples. Then edit `checkpoint = "openai/whisper-small.en"` in `tqdm_loader.py` to use your preferred language model.
 
 ## Adjustable settings
 
