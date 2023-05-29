@@ -20,7 +20,7 @@ If you want to record and/or caption **both** sides of a conversation, echo the 
 gst-launch-1.0 -v autoaudiosrc ! autoaudiosink
 ```
 
-Set up your inputs and outputs using your favorite mixer program. Then, fire up `caption_anything.py`, choose the monitor device, which might look like `Monitor of Built-In Analog Stereo`. And do your recording/captioning from there.
+Set up your inputs and outputs using your favorite mixer program. Then, fire up `caption_anything.py`, choose the monitor device, which might look like `Monitor of Built-In Analog Stereo`. And do your recording/captioning from there. Be aware that there might be laws that require consent for recording and/or publishing conversations and copyrighted content.
 
 ## Requirements
 
