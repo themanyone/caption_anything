@@ -33,7 +33,7 @@ source .venv/bin/activate
 pip3 -r requirements.txt
 ```
 
-Install [whisper-jax and requirements]([WhisperX and requirements](https://github.com/sanchit-gandhi/whisper-jax) and get whisper-jax working before making captions here. Try out some of their examples. Then edit `checkpoint = "openai/whisper-small.en"` in `tqdm_loader.py` to use your preferred language model.
+Install [whisper-jax and requirements](https://github.com/sanchit-gandhi/whisper-jax) and get whisper-jax working before making captions here. Try out some of their examples. Then edit `checkpoint = "openai/whisper-small.en"` in `tqdm_loader.py` to use your preferred language model.
 
 ## Adjustable settings
 
