@@ -8,17 +8,17 @@ It is especially handy for people with hearing or memory loss, or people who spe
 
 ## Usage
 
-This is not designed as a dictation app. [Try my other app for dictation.](https://github.com/themanyone/whisper_dictation).
+This is not designed as a dictation app. [Try my other app for dictation.](https://github.com/themanyone/whisper_dictation)
 
-If you want to record and/or caption **both** sides of the conversation, echo the mic to the output channel first. You could do that via gstreamer. **WARNING.** This will cause unwanted feedback if your volume is up too high!
+This is not a full-featured recording app either. Although it might be useful to record from music sites that otherwise discourage recording. If you don't need captions and just want to record and edit audio, try [audacity](https://sourceforge.net/projects/audacity/).
+
+If you want to record and/or caption **both** sides of a conversation, echo the mic to the output channel first. You could do that via gstreamer. **WARNING.** This will cause unwanted feedback if your volume is up too high!
 
 ```
 gst-launch-1.0 -v autoaudiosrc ! autoaudiosink
 ```
 
 Set up your inputs and outputs using your favorite mixer program. Then, fire up `caption_anything.py`, choose the monitor device, which might look like `Monitor of Built-In Analog Stereo`. And do your recording/captioning from there.
-
-This isn't a full-featured recording app. Although it might be useful to record from music sites that otherwise discourage recording. If you don't need captions and just want to record and edit audio, try [audacity](https://sourceforge.net/projects/audacity/).
 
 ## Requirements
 
