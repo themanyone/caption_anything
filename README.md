@@ -6,11 +6,13 @@ Caption, translate, or optionally record, whatever audio/video is playing throug
 
 It is especially handy for people with hearing or memory loss, or people who speak another language, to caption and record calls. I made it specifically for watching videos when a video creator has a strong accent. AI captions work even when I can't understand what they are saying. Captions can be saved in a variety of formats. The saved data could even be corrected and used to train another AI.
 
+## Notices
+
+These apps take upwards of 2Gb of video memory for the AI. This is not designed as a dictation app. [Try my other app for dictation.](https://github.com/themanyone/whisper_dictation) It is not a full-featured recording app either. Although it might be useful to record from music sites that otherwise discourage recording. If you don't need captions and just want to record and edit audio, try [audacity](https://sourceforge.net/projects/audacity/).
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the included GNU General Public License for more details.
+
 ## Usage
-
-This is not designed as a dictation app. [Try my other app for dictation.](https://github.com/themanyone/whisper_dictation)
-
-This is not a full-featured recording app either. Although it might be useful to record from music sites that otherwise discourage recording. If you don't need captions and just want to record and edit audio, try [audacity](https://sourceforge.net/projects/audacity/).
 
 If you want to record and/or caption **both** sides of a conversation, echo the mic to the output channel first. You could do that via gstreamer. **WARNING.** This will cause unwanted feedback if your volume is up too high!
 
@@ -27,6 +29,9 @@ Install [whisper-jax and requirements]([WhisperX and requirements](https://githu
 Install more requirements. Not tested or guaranteed to work yet. You might need to edit the requirements for your setup.
 
 ```
+# activate conda or venv
+python3 -m venv .venv
+source .venv/bin/activate
 pip3 -r requirements.txt
 ```
 
