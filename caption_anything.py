@@ -91,7 +91,6 @@ class MainWindow(Gtk.ApplicationWindow):
         
         # Set file name
         self.file_entry = Gtk.Entry()
-        self.file_entry.set_text(time.ctime().replace(" ", "_")+".wav")
         self.file_entry.set_width_chars(10)
         self.header.pack_start(self.file_entry)
         self.file_entry.set_tooltip_text("optional .wav file for recordings")
