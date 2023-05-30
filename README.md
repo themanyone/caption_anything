@@ -45,7 +45,9 @@ The captions can be shown in whatever font, color, size and style you want. Edit
 
 ## Generate captions via the network
 
-There are already plenty of apps for that. This app took [this one](https://github.com/sanchit-gandhi/whisper-jax/blob/main/app/app.py) and adapted it to work offline and locally, in real-time, on a single machine.
+This app can use a [the whisper-jax server](https://github.com/sanchit-gandhi/whisper-jax/blob/main/app/app.py) running on your local network. Or any copy of it hosted on the internet. Launch `caption_client.py` to connect to it.
+
+`Caption Anything` actually borrowed some of its code from the above server to run a single-user instance of it in memory, so you don't have to launch any servers or have the overhead from multiple processes, which provide absolutely no benefit for us when recording one stream at a time on one machine.
 
 ## Issues
 
