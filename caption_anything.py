@@ -58,7 +58,7 @@ class MainWindow(Gtk.ApplicationWindow):
         combo = Gtk.ComboBoxText()
         self.list_inputs(combo)
         label = Gtk.Label()
-        label.set_text("      From   ")
+        label.set_text("  From ")
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
         vbox.append(hbox)
@@ -86,7 +86,7 @@ class MainWindow(Gtk.ApplicationWindow):
         self.header = Gtk.HeaderBar()
         self.set_titlebar(self.header)
         self.file_label = Gtk.Label()
-        self.file_label.set_text("Record   ")
+        self.file_label.set_text(" File    ")
         self.header.pack_start(self.file_label)
         
         # Set file name
@@ -94,6 +94,7 @@ class MainWindow(Gtk.ApplicationWindow):
         self.file_entry.set_text(time.ctime().replace(" ", "_")+".wav")
         self.file_entry.set_width_chars(10)
         self.header.pack_start(self.file_entry)
+        self.file_entry.set_tooltip_text("optional .wav file for recordings")
         
         # add record button
         transcribe_button = Gtk.Button.new_with_label("Transcribe")
@@ -224,7 +225,7 @@ class MainWindow(Gtk.ApplicationWindow):
             except Exception as e:
                 print("Exception:", e)
         if len(self.recording):
-            if os.path.isfile(filename):
+            if filename and os.path.isfile(filename):
                 # File exists. Overwrite? Python gi Gtk(4.0) dialog.
                 message = Gtk.MessageDialog(
                 message_type=Gtk.MessageType.WARNING, buttons=Gtk.ButtonsType.YES_NO,
@@ -241,6 +242,8 @@ class MainWindow(Gtk.ApplicationWindow):
         # If it is okay to save the file
         if button == Gtk.ResponseType.YES:
             filename = self.file_entry.get_text()
+            if not filename:
+                filename = time.ctime().replace(" ", "_")+".wav"
             # Save the recording to a file
             rec = np.concatenate(self.recording)
             try:
