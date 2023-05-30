@@ -81,7 +81,6 @@ class MainWindow(Gtk.ApplicationWindow):
         Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), 
             css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         self.captions_box.set_css_classes(['warning'])
-
         
         # Add a header
         self.header = Gtk.HeaderBar()
@@ -185,6 +184,7 @@ class MainWindow(Gtk.ApplicationWindow):
         with subdevice.recorder(samplerate=sample_rate, channels=channels) as recorder:
             while not self.stop_event.is_set():
                 start_time = time.time() - begin
+                if start_time < 100: start_time = 0 # correct for load time
                 # Record the stream
                 audio_data = recorder.record(numframes=duration)
                 self.recording.append(audio_data)

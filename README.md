@@ -1,10 +1,10 @@
 # Caption Anything
 
-<img src="img/ss.png" width="300" align="right">
+<img src="img/ss.png" alt="example pic" title="Actual screenshot of app generating captions." width="300" align="right">
 
 Caption, translate, or optionally record, whatever audio/video is playing through the speakers, or from the microphone. Privacy-focused, offline, real-time captions using your video card and [whisper-jax](https://github.com/sanchit-gandhi/whisper-jax/).
 
-The original purpose of this application was for watching informational videos made with a strong accent when there are no captions available. It is especially handy for people with hearing or memory loss, or people who speak another language, to caption and record calls. The caption display is delayed a few seconds, so if you miss something, you can glance at the output. Captions can be saved in a variety of formats. The saved data could even be corrected and used to train another AI.
+This application was originally made for watching informational videos when the presenter had a strong accent that was difficult to understand. It would be especially handy for people with hearing or memory loss, or those who speak another language, to caption and record calls as well. The caption display is delayed a few seconds, so if you miss something--run that by me again? Just glance at the output. Captions are saved in a variety of formats along with the recording. The saved audio and transcripts could even be corrected and used to train another AI.
 
 ## Notices
 
@@ -20,7 +20,7 @@ If you want to record and/or caption **both** sides of a conversation, echo the 
 gst-launch-1.0 -v autoaudiosrc ! autoaudiosink
 ```
 
-Set up your inputs and outputs using your favorite mixer program. Then, fire up `caption_anything.py`, choose the monitor device, which might look like `Monitor of Built-In Analog Stereo`. And do your recording/captioning from there. Be aware that there might be laws that require consent for recording and/or publishing conversations and copyrighted content.
+Set up your inputs and outputs using your favorite mixer program. Then, fire up `caption_anything.py`, choose the monitor device, which might look like `Monitor of Built-In Analog Stereo`. And do your recording/captioning from there. Right-click on the title bar and choose "Always on top" to see captions over other apps. Be aware that there might be laws that require consent for recording and/or publishing conversations and copyrighted content.
 
 ## Requirements
 
@@ -38,6 +38,10 @@ Install [whisper-jax and requirements](https://github.com/sanchit-gandhi/whisper
 ## Adjustable settings
 
 It's python, so feel free to edit `caption_anything.py`. You could change sample_rate to 22050, and 1 channel for recordings if all you want to save space with voice recordings. You could change the task to "translate" if you prefer your captions to translate from another language.
+
+Set `max_duration` if you want to record or caption more than 10 minutes at a time. This will of course use more memory.
+
+The captions can be shown in whatever font, color, size and style you want. Edit `style.css`.
 
 ## Generate captions via the network
 
