@@ -40,7 +40,7 @@ from tqdm_loader import tqdm_generate, init_pipeline
 sample_rate = 44100
 channels = 2
 chunk_time = 2 # Process 2-second chunks. Larger is more-accurate, slower.
-max_duration = 10 * 60 # Max recording duration: quits after 10 minutes
+max_duration = 120 * 60 # Max recording duration: quits after 120 minutes
 task = "transcribe"
 return_timestamps = False
 pipeline = None

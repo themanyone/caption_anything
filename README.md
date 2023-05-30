@@ -39,7 +39,7 @@ Install [whisper-jax and requirements](https://github.com/sanchit-gandhi/whisper
 
 It's python, so feel free to edit `caption_anything.py`. You could change sample_rate to 22050, and 1 channel for recordings if all you want to save space with voice recordings. You could change the task to "translate" if you prefer your captions to translate from another language.
 
-Set `max_duration` if you want to record or caption more than 10 minutes at a time. This will of course use more memory.
+Set `max_duration` if you want to record or caption more than 120 minutes at a time. This will of course use more memory.
 
 The captions can be shown in whatever font, color, size and style you want. Edit `style.css`.
 
