@@ -2,17 +2,17 @@
 # -*- coding: utf-8 -*-
 ##
 ## Copyright 2023 Henry Kroll <nospam@thenerdshow.com>
-## 
+##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
 ## the Free Software Foundation; either version 2 of the License, or
 ## (at your option) any later version.
-## 
+##
 ## This program is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ## GNU General Public License for more details.
-## 
+##
 ## You should have received a copy of the GNU General Public License
 ## along with this program; if not, write to the Free Software
 ## Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
@@ -51,7 +51,7 @@ class MainWindow(Gtk.ApplicationWindow):
         # Create an event object to signal mixer to stop
         self.stop_event = threading.Event()
         self.set_default_size(500, 50)
-        
+
         # Create combo box
         combo = Gtk.ComboBoxText()
         self.list_inputs(combo)
@@ -65,34 +65,34 @@ class MainWindow(Gtk.ApplicationWindow):
         hbox.append(combo)
         # Connect signal to get the selected text
         combo.connect("changed", self.on_combobox_changed)
-        
+
         # Create a GtkEntry box
         txt = "Ready to transcribe."
         entry = Gtk.Entry()
         entry.set_text(txt)
         vbox.append(entry)
         self.captions_box = entry
-        
+
         # Adding your custom CSS stylesheet
         css_provider = Gtk.CssProvider()
         css_provider.load_from_path('style.css')
-        Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), 
+        Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(),
             css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         # self.captions_box.set_css_classes(['warning'])
-        
+
         # Add a header
         self.header = Gtk.HeaderBar()
         self.set_titlebar(self.header)
         self.file_label = Gtk.Label()
         self.file_label.set_text(" File    ")
         self.header.pack_start(self.file_label)
-        
+
         # Set file name
         self.file_entry = Gtk.Entry()
         self.file_entry.set_width_chars(10)
         self.header.pack_start(self.file_entry)
         self.file_entry.set_tooltip_text("optional .wav file for recordings")
-        
+
         # add record button
         transcribe_button = Gtk.Button.new_with_label("Transcribe")
         self.header.pack_start(transcribe_button)
@@ -103,10 +103,10 @@ class MainWindow(Gtk.ApplicationWindow):
         self.header.pack_start(stop_button)
         # Connect signal to stop_audio function
         stop_button.connect("clicked", self.stop_audio)
-        
+
         # Create a popover
         self.popover = Gtk.PopoverMenu()
-        
+
         # Create a new menu
         menu = Gio.Menu()
         self.popover.set_menu_model(menu)
@@ -115,20 +115,20 @@ class MainWindow(Gtk.ApplicationWindow):
         self.hamburger = Gtk.MenuButton()
         self.hamburger.set_popover(self.popover)
         self.hamburger.set_icon_name("open-menu-symbolic")  # Give it a nice icon
-        
+
         # Add menu button to the header bar
         self.header.pack_start(self.hamburger)
 
-        # Create an action to run a *show about dialog* function we will create 
+        # Create an action to run a *show about dialog* function we will create
         action = Gio.SimpleAction.new("open-about", None)
         action.connect("activate", self.on_open_about)
         self.add_action(action)
-        
+
         menu.append("About", "win.open-about")
-        
+
         self.init_pipe = threading.Thread(target=self.get_pipeline)
         self.init_pipe.start()
-        
+
     def on_open_about(self, action, param):
         dialog = Adw.AboutWindow(transient_for=app.get_active_window())
         dialog.set_application_name=("App name")
@@ -144,7 +144,7 @@ class MainWindow(Gtk.ApplicationWindow):
         dialog.set_developers(["Developer"])
         dialog.set_application_icon("com.github.devname.appname") # icon must be uploaded in ~/.local/share/icons or /usr/share/icons
         dialog.present()
-        
+
     # Populate combo box
     def list_inputs(self, combo):
         # List monitor subdevices by name
@@ -155,7 +155,7 @@ class MainWindow(Gtk.ApplicationWindow):
         # Set the active item
         self.input_id = inputs[2].id
         combo.set_active_id(self.input_id)
-    
+
     def on_combobox_changed(self, combo):
         self.input_id = combo.get_active_id()
         if self.input_id:
@@ -169,7 +169,7 @@ class MainWindow(Gtk.ApplicationWindow):
         self.rec_thread = threading.Thread(target=self.recording_thread)
         self.rec_thread.start() # Start transcribing
         print("Transcribing")
-        
+
     def recording_thread(self):
         # Start recording from the selected subdevice
         subdevice = sc.get_microphone(self.input_id, True)
@@ -186,24 +186,24 @@ class MainWindow(Gtk.ApplicationWindow):
                 # Record the stream
                 audio_data = recorder.record(numframes=duration)
                 self.recording.append(audio_data)
-                
+
                 # Save to "tempfile"
                 tname = tempfile.mktemp()
                 # Doesn't really save anything. The OS treats tempfile as memory.
                 sf.write(tname, audio_data, samplerate=sample_rate, format='wav')
-                
+
                 result = client.predict(tname, task, False, api_name="/predict_1")
                 text_chunk = result[0]
-                
+
                 end_time = time.time() - begin
                 os.remove(tname)
-                
+
                 # Show the captions
                 if text_chunk != " you":
                     GLib.idle_add(self.show_caption, text_chunk)
                     self.text.append([start_time, end_time, text_chunk.strip()])
                 ttime += end_time - start_time
-                
+
                 # Quit if max duration reached
                 if ttime > max_duration:
                     print("Max recording duration reached. Stopping.")
@@ -214,7 +214,7 @@ class MainWindow(Gtk.ApplicationWindow):
         self.captions_box.set_css_classes(['trans'])
         self.captions_box.set_text(text_chunk)
         return False
-        
+
     def stop_audio(self, widget, **kwargs):
         filename = self.file_entry.get_text()
         if not self.stop_event.is_set():
@@ -234,7 +234,7 @@ class MainWindow(Gtk.ApplicationWindow):
                 message.connect("response", self.write_file)
                 message.present()
             else: self.write_file(None, Gtk.ResponseType.YES)
-            
+
     def write_file(self, widget, button):
         # If called as the result of a dialog, take down the dialog
         if widget: widget.destroy()
@@ -256,12 +256,12 @@ class MainWindow(Gtk.ApplicationWindow):
                         exts[ext] = filename[:-4] + ext
                     else:
                         exts[ext] = filename + ext
-                        
+
                 # write text tile
                 f = open(exts[".txt"], 'w')
                 f.write('\n'.join([x[2] for x in self.text]))
                 f.close()
-                
+
                 # write srt
                 def srt_time(time):
                     hours = int(time / 3600)
@@ -278,7 +278,7 @@ class MainWindow(Gtk.ApplicationWindow):
                     f.write(x[2] + '\n')
                     f.write('\n')
                 f.close()
-                
+
                 # write tsv
                 def tsv_time(time):
                     return math.floor(time*1000)
@@ -287,7 +287,7 @@ class MainWindow(Gtk.ApplicationWindow):
                 for x in self.text:
                     f.write(f"{tsv_time(x[0])}\t{tsv_time(x[1])}\t{x[2]}\n")
                 f.close()
-                
+
                 # write vtt
                 def vtt_time(time):
                     minutes = int((time % 3600) / 60)
@@ -299,18 +299,18 @@ class MainWindow(Gtk.ApplicationWindow):
                 for x in self.text:
                     f.write(vtt_time(x[0]) + " --> " + vtt_time(x[1]) + '\n')
                     f.write(x[2] + '\n')
-                    f.write('\n')                
+                    f.write('\n')
                 f.close()
                 self.text = []
             except Exception as e:
                 print(e)
         # Allow transcribing to begin again, even if no file was saved.
         self.allow_transcribing = True
-    
+
     def get_pipeline(self):
         self.captions_box.set_css_classes(['info'])
         self.allow_transcribing = True # Allow transcribing
-        
+
 class MyApp(Adw.Application):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -319,6 +319,6 @@ class MyApp(Adw.Application):
     def on_activate(self, app):
         self.win = MainWindow(application=app)
         self.win.present()
-    
+
 app = MyApp(application_id="com.comptune.rec")
 app.run(sys.argv)

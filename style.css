@@ -9,14 +9,14 @@
 .info {
     font-size: 24pt;
     font-weight: bold;
-	color: lightblue;
+	color: blue;
 	border: 3px solid;
 }
 
 .trans {
     font-size: 24pt;
     font-weight: bold;
-	color: white;
+	color: gray;
 	border: 3px solid;
 }
 
