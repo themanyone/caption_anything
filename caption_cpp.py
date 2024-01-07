@@ -156,7 +156,7 @@ class MainWindow(Gtk.ApplicationWindow):
         self.input_id = inputs[2].id
         combo.set_active_id(self.input_id)
 
-    def on_combobox_changed(elf, combo):
+    def on_combobox_changed(self, combo):
         self.input_id = combo.get_active_id()
         if self.input_id:
             print(self.input_id)
