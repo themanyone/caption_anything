@@ -32,7 +32,7 @@ def identity(batch):
 # Instantiate the pipeline
 pipeline = None
 step = 0
-    
+
 def tqdm_generate(inputs: dict, task: str, return_timestamps: bool):
     inputs_len = inputs["array"].shape[0]
     all_chunk_start_idx = np.arange(0, inputs_len, step)

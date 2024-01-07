@@ -76,7 +76,7 @@ class MainWindow(Gtk.ApplicationWindow):
         # Adding your custom CSS stylesheet
         css_provider = Gtk.CssProvider()
         css_provider.load_from_path('style.css')
-        Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), 
+        Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(),
             css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         # self.captions_box.set_css_classes(['warning'])
 
@@ -119,7 +119,7 @@ class MainWindow(Gtk.ApplicationWindow):
         # Add menu button to the header bar
         self.header.pack_start(self.hamburger)
 
-        # Create an action to run a *show about dialog* function we will create 
+        # Create an action to run a *show about dialog* function we will create
         action = Gio.SimpleAction.new("open-about", None)
         action.connect("activate", self.on_open_about)
         self.add_action(action)
@@ -160,6 +160,11 @@ class MainWindow(Gtk.ApplicationWindow):
         self.input_id = combo.get_active_id()
         if self.input_id:
             print(self.input_id)
+
+    def on_delete(self):
+        if self.is_closed():
+            return None
+        self.destroy()
 
     ## Audio code
     def record_audio(self, widget, **kwargs):
