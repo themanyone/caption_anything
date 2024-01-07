@@ -2,19 +2,19 @@
 
 <img src="img/ss.png" alt="example pic" title="Actual screenshot of app generating captions." width="300" align="right">
 
-Caption, translate, or optionally record, whatever audio/video is playing through the speakers, or from the microphone. Privacy-focused, offline, real-time captions using your video card and [whisper-jax](https://github.com/sanchit-gandhi/whisper-jax/).
+Caption, translate, or optionally record, whatever audio/video is playing through the speakers, or from the microphone. Privacy-focused, offline, real-time captions using your video card and [whisper-jax](https://github.com/sanchit-gandhi/whisper-jax/) or [whisper.cpp](https://github.com/ggerganov/whisper.cpp).
 
-This application was originally made for watching informational videos when the presenter had a strong accent that was difficult to understand. It would be especially handy for people with hearing or memory loss, or those who speak another language, to caption and record calls as well. The caption display is delayed a few seconds, so if you miss something--run that by me again? Just glance at the output. Captions are saved in a variety of formats along with the recording. The saved audio and transcripts could even be corrected and used to train another AI.
+Originally made for watching educational videos, whose presenters had a strong accent. This app would be especially handy for people with hearing or memory loss. Or those who speak another language. It can be used to caption and record VOIP, Zoom, or Google voice calls as well. The caption display is delayed slightly, so if you miss something, "Run that by me again?" Just glance at the output. Captions are saved in a variety of formats along with the recording. The saved audio and transcripts could even be corrected and used as data collection to train a large language model (LLM) with additional languages and dialects.
 
 ## Notices
 
-These apps take upwards of 2Gb of video memory for the AI. This is not designed as a dictation app. [Try my other app for dictation.](https://github.com/themanyone/whisper_dictation) It is not a full-featured recording app either. Although it might be useful to record from music sites that otherwise discourage recording. If you don't need captions and just want to record and edit audio, try [audacity](https://sourceforge.net/projects/audacity/).
+This is not designed for dictation. [Try my other app for that.](https://github.com/themanyone/whisper_dictation) It is not a full-featured recording app either. Although it might be useful to record karaoke. If you don't need captions and just want to record and edit audio, try [audacity](https://sourceforge.net/projects/audacity/).
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the included GNU General Public License for more details.
 
 ## Usage
 
-If you want to record and/or caption **both** sides of a conversation, echo the mic to the output channel first. You could do that via gstreamer. **WARNING.** This will cause unwanted feedback if your volume is up too high!
+If you want to record and/or caption **both** sides of a conversation, echo the mic to the output channel first. You could do that via gstreamer. **WARNING.** This *will* cause unwanted feedback if your volume is set too high. And the other party might hear echos.
 
 ```
 gst-launch-1.0 -v autoaudiosrc ! autoaudiosink
@@ -24,8 +24,10 @@ Set up your inputs and outputs using your favorite mixer program. Then, fire up 
 
 ## Requirements
 
-Set up your virtual environment and install the requirements. The following is not tested or guaranteed to work yet. You might need to edit the requirements for your setup.
+Skip down to **generate captions via the network** if you want to use accelerated whisper.cpp.
 
+Set up your virtual environment and prepare some requirements for Whisper-JAX.
+ 
 ```
 # activate conda or venv
 python3 -m venv .venv
@@ -45,18 +47,18 @@ The captions can be shown in whatever font, color, size and style you want. Edit
 
 ## Generate captions via the network
 
-We now have a [Whisper.cpp](https://github.com/ggerganov/whisper.cpp) client, `caption_cpp.py`. The client connects to a running instance of Whisper.cpp server. To minimize resources, start it with a command similar to this. `whisper.cpp` does some translation into the target language `-l`. If you want it to specialize in translation, add `--translate` flag. And choose a larger model.
+We now have a [Whisper.cpp](https://github.com/ggerganov/whisper.cpp) client, `caption_cpp.py`. The client connects to a running instance of Whisper.cpp server. `whisper.cpp` does some translation into the target language `-l`. If you want it to specialize in translation, add `--translate` flag. And choose a larger model. The tiny model works fine for us. We launch the server under a soft link so we know what it is when we see it in the process list.
 
 ```shell
-./server -l en -m models/ggml-tiny.en.bin --port 7777
+ln -s $(pwd)/server whisper_cpp_server
+./whisper_cpp_server -l en -m models/ggml-tiny.en.bin --port 7777
 ```
 
-Due to a [bug](https://github.com/ggerganov/whisper.cpp/issues/1587), it might be necessary to
- add the `-ng` flag, if the server was compiled with cuBLAS.
+Due to a [bug](https://github.com/ggerganov/whisper.cpp/issues/1587), it was once necessary to add the `-ng` flag when compiled with cuBLAS. But this is fixed as of v1.5.3.
  
 There is also a client for a [whisper-jax server](https://github.com/sanchit-gandhi/whisper-jax/blob/main/app/app.py) running on your local network. Or any copy of it hosted on the internet. Launch `caption_client.py` to connect to that.
 
-`Caption Anything` repurposes code from the [whisper-jax server](https://github.com/sanchit-gandhi/whisper-jax/blob/main/app/app.py) to run a single-user instance of it in memory, so you don't have to launch any servers or have the overhead from multiple processes, which provide absolutely no benefit for a single user.
+`caption_anything.py` repurposes code from the [whisper-jax server](https://github.com/sanchit-gandhi/whisper-jax/blob/main/app/app.py) to run a single-user instance of it in memory, so you don't have to launch any servers or have the overhead from multiple processes, which provide absolutely no benefit for a single user.
 
 ## JAX Issues
 
