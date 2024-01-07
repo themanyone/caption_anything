@@ -215,6 +215,11 @@ class MainWindow(Gtk.ApplicationWindow):
         self.captions_box.set_text(text_chunk)
         return False
 
+    def on_delete(self):
+        if self.is_closed():
+            return None
+        self.destroy()
+
     def stop_audio(self, widget, **kwargs):
         filename = self.file_entry.get_text()
         if not self.stop_event.is_set():

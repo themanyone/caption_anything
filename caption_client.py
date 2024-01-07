@@ -161,6 +161,11 @@ class MainWindow(Gtk.ApplicationWindow):
         if self.input_id:
             print(self.input_id)
 
+    def on_delete(self):
+        if self.is_closed():
+            return None
+        self.destroy()
+
     ## Audio code
     def record_audio(self, widget, **kwargs):
         if not self.allow_transcribing: return False
