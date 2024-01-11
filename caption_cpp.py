@@ -78,7 +78,7 @@ class MainWindow(Gtk.ApplicationWindow):
         css_provider.load_from_path('style.css')
         Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(),
             css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
-        # self.captions_box.set_css_classes(['warning'])
+        #self.captions_box.set_css_classes(['warning'])
 
         # Add a header
         self.header = Gtk.HeaderBar()
@@ -203,7 +203,6 @@ class MainWindow(Gtk.ApplicationWindow):
 
                 try:
                     response = requests.post(cpp_url, files=files, data=data)
-                    print(f"Response status code: {response.status_code}")
                     print(response.json())
                     os.remove(f)
 
@@ -259,7 +258,9 @@ class MainWindow(Gtk.ApplicationWindow):
         if button == Gtk.ResponseType.YES:
             filename = self.file_entry.get_text()
             if not filename:
-                filename = time.ctime().replace(" ", "_")+".wav"
+                filename = time.ctime().replace(" ", "_")
+            if filename[-4:] != '.wav':
+                filename += ".wav"
             # Save the recording to a file
             rec = np.concatenate(self.recording)
             try:

@@ -78,7 +78,7 @@ class MainWindow(Gtk.ApplicationWindow):
         css_provider.load_from_path('style.css')
         Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(),
             css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
-        # self.captions_box.set_css_classes(['warning'])
+        #self.captions_box.set_css_classes(['warning'])
 
         # Add a header
         self.header = Gtk.HeaderBar()
@@ -186,6 +186,7 @@ class MainWindow(Gtk.ApplicationWindow):
         begin = time.time()
         with subdevice.recorder(samplerate=sample_rate, channels=channels) as recorder:
             while not self.stop_event.is_set():
+                text_chunk = ""
                 start_time = time.time() - begin
                 if start_time < 0.1: start_time = 0 # correct for load time
                 # Record the stream
@@ -247,7 +248,9 @@ class MainWindow(Gtk.ApplicationWindow):
         if button == Gtk.ResponseType.YES:
             filename = self.file_entry.get_text()
             if not filename:
-                filename = time.ctime().replace(" ", "_")+".wav"
+                filename = time.ctime().replace(" ", "_")
+            if filename[-4:] != '.wav':
+                filename += ".wav"
             # Save the recording to a file
             rec = np.concatenate(self.recording)
             try:
