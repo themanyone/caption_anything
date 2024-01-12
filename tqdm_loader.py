@@ -35,7 +35,10 @@ step = 0
 
 def tqdm_generate(inputs: dict, task: str, return_timestamps: bool):
     inputs_len = inputs["array"].shape[0]
-    all_chunk_start_idx = np.arange(0, inputs_len, step)
+    try:
+        all_chunk_start_idx = np.arange(0, inputs_len, step)
+    except:
+        all_chunk_start_idx = inputs
     num_samples = len(all_chunk_start_idx)
     num_batches = math.ceil(num_samples / BATCH_SIZE)
     dummy_batches = list(
