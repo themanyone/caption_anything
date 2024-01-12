@@ -52,6 +52,7 @@ class MyApp(Adw.Application):
     def on_activate(self, app):
         self.win = cpWindow(application=app)
         self.win.present()
+        self.win.captions_box.set_text("Ready to transcribe.")
 
 app = MyApp(application_id="com.comptune.rec")
 app.run(sys.argv)

@@ -47,8 +47,6 @@ class cpWindow(MainWindow):
             print(text_chunk)
             self.show_caption(text_chunk)
             self.text.append([start_time, end_time, text_chunk])
-        #except Exception as e:
-        #    print("Exception:", e)
 
     def get_pipeline(self):
         global pipeline
@@ -58,7 +56,6 @@ class cpWindow(MainWindow):
         self.allow_transcribing = True # Allow transcribing
         print("Ready")
 
-
 class MyApp(Adw.Application):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -67,8 +64,7 @@ class MyApp(Adw.Application):
     def on_activate(self, app):
         self.win = cpWindow(application=app)
         self.win.present()
-        self.win.init_pipe = threading.Thread(target=self.win.get_pipeline)
-        self.win.init_pipe.start()
+        self.win.captions_box.set_text("Loading language model...")
 
 app = MyApp(application_id="com.comptune.rec")
 app.run(sys.argv)

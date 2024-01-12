@@ -92,9 +92,7 @@ class MainWindow(Gtk.ApplicationWindow):
         hbox.append(device_menu)
 
         # Create a GtkEntry box
-        txt = "Ready to transcribe."
         entry = Gtk.Entry()
-        entry.set_text(txt)
         vbox.append(entry)
         self.captions_box = entry
 
