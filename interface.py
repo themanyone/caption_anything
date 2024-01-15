@@ -73,7 +73,6 @@ class MainWindow(Gtk.ApplicationWindow):
             last += 1
 
         # Populate DropDown menu with device names
-        device_menu = Gtk.DropDown()
         device_factory = Gtk.SignalListItemFactory()
         device_menu = Gtk.DropDown(model=device_list, factory=device_factory)
         device_factory.connect("setup", self.on_device_factory_setup)
