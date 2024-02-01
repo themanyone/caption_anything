@@ -50,7 +50,7 @@ class cpWindow(MainWindow):
             # Show the captions
             if text_chunk != "you":
                 print(text_chunk)
-                self.show_caption(text_chunk)
+                GLib.idle_add(self.show_caption, text_chunk)
                 self.text.append([start_time, end_time, text_chunk])
         except Exception as e:
             sys.stderr.write(f"Error: {e}")
