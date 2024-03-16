@@ -47,7 +47,7 @@ The captions can be shown in whatever font, color, size and style you want. Edit
 
 ## Generate captions via the network
 
-We now have a [Whisper.cpp](https://github.com/ggerganov/whisper.cpp) client, `caption_cpp.py`. The client connects to a running instance of Whisper.cpp server. `whisper.cpp` does some translation into the target language `-l`. If you want it to specialize in translation, add `--translate` flag. And choose a larger model. The tiny model works fine for us. We launch the server under a soft link so we know what it is when we see it in the process list.
+We now have a [Whisper.cpp](https://github.com/ggerganov/whisper.cpp) client, `caption_cpp_client.py`. The client connects to a running instance of Whisper.cpp server. `whisper.cpp` does some translation into the target language `-l`. If you want it to specialize in translation, add `--translate` flag. And choose a larger model. The tiny model works fine for us. We launch the server under a soft link so we know what it is when we see it in the process list.
 
 ```shell
 ln -s $(pwd)/server whisper_cpp_server
