@@ -22,19 +22,11 @@
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw, Gdk, Gio, GLib, Pango, GObject
+from gi.repository import Adw, GLib
 import sys, os, requests
 from interface import MainWindow
 
 cpp_url = "http://127.0.0.1:7777/inference"
-
-## Audio includes
-import soundcard as sc
-import soundfile as sf
-import queue
-import math
-import time
-import tempfile
 
 class cpWindow(MainWindow):
     def transcribe(self, f, start_time, end_time):

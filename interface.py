@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ##
-## Copyright 2023 Henry Kroll <nospam@thenerdshow.com>
+## Copyright 2024 Henry Kroll <nospam@thenerdshow.com>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -22,15 +22,14 @@
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw, Gdk, Gio, GLib, Pango, GObject
-import sys, os, requests
+from gi.repository import Gtk, Adw, Gdk, Gio, GLib, GObject
+import os
 
 ## Audio includes
 import soundcard as sc
 import soundfile as sf
 import numpy as np
 import threading
-import queue
 import math
 import time
 import tempfile
@@ -155,7 +154,6 @@ class MainWindow(Gtk.ApplicationWindow):
         # Selected Gtk.StringObject
         selected = dropdown.props.selected_item
         if selected is not None:
-            name = selected.get_name()
             self.input_id = selected.get_id()
             print('Selected', self.input_id)
 
@@ -210,7 +208,6 @@ class MainWindow(Gtk.ApplicationWindow):
         begin = time.time()
         with subdevice.recorder(samplerate=sample_rate, channels=channels) as recorder:
             while not self.stop_event.is_set():
-                text_chunk = ""
                 start_time = time.time() - begin
                 if start_time < 0.1: start_time = 0 # correct for load time
                 # Record the stream
@@ -224,7 +221,7 @@ class MainWindow(Gtk.ApplicationWindow):
                 sf.write(f, audio_data, samplerate=sample_rate, format='wav')
 
                 # Transcribe audio with idle_add queue
-                text_chunk = GLib.idle_add(self.transcribe, f, start_time, end_time)
+                GLib.idle_add(self.transcribe, f, start_time, end_time)
 
                 ttime += end_time - start_time
 
