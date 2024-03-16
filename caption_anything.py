@@ -22,8 +22,8 @@
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw
-import sys, os, threading
+from gi.repository import Adw
+import sys, os
 from transformers.pipelines.audio_utils import ffmpeg_read
 from interface import MainWindow
 print("Importing FlaxWhisperPipline... Please wait...")
