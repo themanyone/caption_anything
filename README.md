@@ -47,14 +47,16 @@ The captions can be shown in whatever font, color, size and style you want. Edit
 
 ## Generate captions via the network
 
-We now have a [Whisper.cpp](https://github.com/ggerganov/whisper.cpp) client, `caption_cpp_client.py`. The client connects to a running instance of Whisper.cpp server. `whisper.cpp` does some translation into the target language `-l`. If you want it to specialize in translation, add `--translate` flag. And choose a larger model. The tiny model works fine for us. We launch the server under a soft link so we know what it is when we see it in the process list.
+`Whisper.cpp.` We now have a [Whisper.cpp](https://github.com/ggerganov/whisper.cpp) client, `caption_cpp_client.py`. The client connects to a running instance of Whisper.cpp server. `whisper.cpp` does some translation into the target language `-l`. If you want it to specialize in translation, add `--translate` flag. And choose a larger model. The tiny model works fine for English. Compile `whisper.cpp` with CUDA (or whatever AI acceleration hardware your platform provides) for best results.
+
+**Fedora 42.** is not CUDA-supported. But we figured it out! You can install CUDA for Fedora 41, and build `whisper.cpp` by removing
+compatability versions of gcc14, gcc14-c++, if installed. And sourcing gcc13-13.3.1-2.fc41.1 and gcc13-c++-13.3.1-2.fc41.1 rpms from
+Fedora 41 repos [as described here](https://github.com/themanyone/whisper_dictation#Preparation).
 
 ```shell
 ln -s $(pwd)/server whisper_cpp_server
 ./whisper_cpp_server -l en -m models/ggml-tiny.en.bin --port 7777
 ```
-
-Due to a [bug](https://github.com/ggerganov/whisper.cpp/issues/1587), it was once necessary to add the `-ng` flag when compiled with cuBLAS. But this is fixed as of v1.5.3.
 
 There is also a client for a [whisper-jax server](https://github.com/sanchit-gandhi/whisper-jax/blob/main/app/app.py) running on your local network. Or any copy of it hosted on the internet. Launch `caption_client.py` to connect to that.
 
@@ -77,4 +79,8 @@ Browse Themanyone
 - YouTube https://www.youtube.com/themanyone
 - Mastodon https://mastodon.social/@themanyone
 - Linkedin https://www.linkedin.com/in/henry-kroll-iii-93860426/
+- Buy me a coffee https://buymeacoffee.com/isreality
 - [TheNerdShow.com](http://thenerdshow.com/)
+
+Copyright (C) 2024-2025 Henry Kroll III, www.thenerdshow.com.
+See [LICENSE](LICENSE) for details.
