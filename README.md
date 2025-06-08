@@ -24,7 +24,9 @@ Set up your inputs and outputs using your favorite mixer program. Then, fire up 
 
 ## Requirements
 
-Skip down to **generate captions via the network** if you want to use accelerated whisper.cpp.
+GUI: `sudo dnf -y install gobject-introspection-devel python3-pygobject-dvel` (fedora) or others, try `sudo apt install libgirepository1.0-dev llvm14-dev`
+
+Then skip down to **generate captions via the network** if you want to use accelerated `whisper.cpp`.
 
 Set up your virtual environment and prepare some requirements for Whisper-JAX.
  
@@ -54,8 +56,8 @@ compatability versions of gcc14, gcc14-c++, if installed. And sourcing gcc13-13.
 Fedora 41 repos [as described here](https://github.com/themanyone/whisper_dictation#Preparation).
 
 ```shell
-ln -s $(pwd)/server whisper_cpp_server
-./whisper_cpp_server -l en -m models/ggml-tiny.en.bin --port 7777
+pip3 install -r requirements-client.txt
+whisper-server -l en -m models/ggml-tiny.en.bin --port 7777
 ```
 
 There is also a client for a [whisper-jax server](https://github.com/sanchit-gandhi/whisper-jax/blob/main/app/app.py) running on your local network. Or any copy of it hosted on the internet. Launch `caption_client.py` to connect to that.
