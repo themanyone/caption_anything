@@ -51,6 +51,17 @@ The captions can be shown in whatever font, color, size and style you want. Edit
 
 `Whisper.cpp.` We now have a [Whisper.cpp](https://github.com/ggerganov/whisper.cpp) client, `caption_cpp_client.py`. The client connects to a running instance of Whisper.cpp server. `whisper.cpp` does some translation into the target language `-l`. If you want it to specialize in translation, add `--translate` flag. And choose a larger model. The tiny model works fine for English. Compile `whisper.cpp` with CUDA (or whatever AI acceleration hardware your platform provides) for best results.
 
+If you [run whisper.cpp as a user service](https://github.com/themanyone/whisper_dictation#server-setup), and run the client on the same machine: You can uncommnt the bottom lines of `caption_cpp_client.py` to start and stop the server when you run the client.
+
+```
+app = MyApp(application_id="com.comptune.rec")
+os.system("systemctl --user start whisper")
+app.run(sys.argv)
+logging.debug("\nFreeing system resources.\n")
+os.system("systemctl --user stop whisper")
+
+```
+
 **Fedora 42.** is not CUDA-supported. But we figured it out! You can install CUDA for Fedora 41, and build `whisper.cpp` by removing
 compatability versions of gcc14, gcc14-c++, if installed. And sourcing gcc13-13.3.1-2.fc41.1 and gcc13-c++-13.3.1-2.fc41.1 rpms from
 Fedora 41 repos [as described here](https://github.com/themanyone/whisper_dictation#Preparation).

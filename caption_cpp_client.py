@@ -58,4 +58,7 @@ class MyApp(Adw.Application):
         self.win.captions_box.set_text("Ready to transcribe.")
 
 app = MyApp(application_id="com.comptune.rec")
+#os.system("systemctl --user start whisper")
 app.run(sys.argv)
+#logging.debug("\nFreeing system resources.\n")
+#os.system("systemctl --user stop whisper")
